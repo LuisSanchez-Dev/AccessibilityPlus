@@ -11,7 +11,9 @@
   </p>
 </p>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-6uRZQ_srmw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+See mod video:
+
+[![Click to see mod video](https://img.youtube.com/vi/jgLycoBoNf0/0.jpg)](https://www.youtube.com/watch?v=jgLycoBoNf0)
 
 ## Table of Contents
 
