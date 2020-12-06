@@ -1,25 +1,39 @@
 package com.luissanchezdev.accessibilityplus;
 
 import com.luissanchezdev.accessibilityplus.mixin.AccessorHandledScreen;
+import com.luissanchezdev.accessibilityplus.keyboard.KeyboardController;
+
+import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.ActionResult;
+
 import net.minecraft.block.entity.SignBlockEntity;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.options.KeyBinding;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import org.lwjgl.glfw.GLFW;
 
 public class AccessibilityPlus implements ModInitializer {
-    public static NarratorPlus narrator;
     public static AccessibilityPlus instance;
+    public static NarratorPlus narrator;
+    public static KeyboardController keyboardController;
 
     @Override
     public void onInitialize() {
-        narrator = new NarratorPlus();
         instance = this;
+        narrator = new NarratorPlus();
+        keyboardController = new KeyboardController();
+        System.setProperty("java.awt.headless", "false");
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null)
@@ -34,6 +48,11 @@ public class AccessibilityPlus implements ModInitializer {
                 }
             }
             if (client.currentScreen == null || !(client.currentScreen instanceof AccessorHandledScreen)) {
+                // System.setProperty("java.library.path", myLibraryPath);
+                // client.player.sendMessage(new
+                // net.minecraft.text.LiteralText(System.getProperty("java.library.path")),
+                // false);
+                // ;
                 HitResult hit = client.crosshairTarget;
                 switch (hit.getType()) {
                     case MISS:

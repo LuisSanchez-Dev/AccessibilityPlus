@@ -6,8 +6,10 @@
     "mixins": [],
     "client": [
         "AccessorHandledScreen",
+        "AccessorSlot",
         "ActionbarInject",
-        "RenderTooltipInject"
+        "RenderTooltipInject",
+        "NarratorManagerInject"
     ],
     "injectors": {
         "defaultRequire": 1

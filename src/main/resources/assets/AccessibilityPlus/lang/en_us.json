@@ -1,0 +1,12 @@
+{
+    "key.categories.accessibilityplus.inventorycontrol": "Accessibility Plus (Inventory)",
+    "key.accessibilityplus.left": "Move Left",
+    "key.accessibilityplus.right": "Move Right",
+    "key.accessibilityplus.up": "Move Up",
+    "key.accessibilityplus.down": "Move Down",
+    "key.accessibilityplus.group": "Switch Group",
+    "key.accessibilityplus.home": "Go To First Slot / Group",
+    "key.accessibilityplus.end": "Go To Last Slot / Group",
+    "key.accessibilityplus.mouseclick": "Mouse Click",
+    "key.accessibilityplus.mouserightclick": "Mouse Right Click"
+}

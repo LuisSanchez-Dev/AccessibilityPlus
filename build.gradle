@@ -11,9 +11,22 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
+    // maven {
+    //     name = "CottonMC"
+    //     url = "https://server.bbkr.space/artifactory/libs-release"
+    // }
+    jcenter()
+    maven {
+        url "maven.fabric"
+    }
     maven {
         name = "CottonMC"
         url = "https://server.bbkr.space/artifactory/libs-release"
+    }
+    maven { url = "https://www.cursemaven.com" }
+    maven {
+        name = "Ladysnake Libs"
+        url = "https://dl.bintray.com/ladysnake/libs"
     }
 }
 
@@ -32,6 +45,10 @@ dependencies {
 	// UI Lib
 	modImplementation "io.github.cottonmc:LibGui:3.2.1+1.16.3"
     include "io.github.cottonmc:LibGui:3.2.1+1.16.3"
+
+    // Detect hotkeys in screen
+    modApi "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
+    include "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
 }
 
 processResources {
