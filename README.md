@@ -81,7 +81,7 @@ Make sure to run Minecraft at least once for the mods folder to be generated.
 
 Simply look at a block to narrate it, hover over items in your inventory to narrate them and whenever a message is shown on your action bar it will be read automatically.
 
-Press the N key to open the configuration.
+Press the N key in game to open the configuration.
 
 ### Inventory keyboard navigation
 
