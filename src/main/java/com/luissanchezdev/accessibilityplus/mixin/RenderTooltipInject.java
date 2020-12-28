@@ -1,5 +1,6 @@
 package com.luissanchezdev.accessibilityplus.mixin;
 
+import com.luissanchezdev.accessibilityplus.config.Config;
 import com.luissanchezdev.accessibilityplus.NarratorPlus;
 import com.luissanchezdev.accessibilityplus.keyboard.KeyboardController;
 
@@ -18,7 +19,7 @@ public class RenderTooltipInject {
 
     @Inject(at = @At("HEAD"), method = "renderTooltip(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/text/Text;II)V")
     private void readOneLineTooltips(MatrixStack matrices, Text text, int x, int y, CallbackInfo callback) {
-        if (KeyboardController.hasControlOverMouse()) {
+        if (!Config.readTooltipsEnabled() || KeyboardController.hasControlOverMouse()) {
             return;
         }
         String nextText = text.getString();
@@ -30,7 +31,7 @@ public class RenderTooltipInject {
 
     @Inject(at = @At("HEAD"), method = "renderTooltip(Lnet/minecraft/client/util/math/MatrixStack;Ljava/util/List;II)V")
     private void renderTooltip(MatrixStack matrices, List<Text> lines, int x, int y, CallbackInfo callback) {
-        if (KeyboardController.hasControlOverMouse()) {
+        if (!Config.readTooltipsEnabled() || KeyboardController.hasControlOverMouse()) {
             return;
         }
         if (lines.size() > 0) {

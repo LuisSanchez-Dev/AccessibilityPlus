@@ -1,4 +1,11 @@
 {
+    "gui.accessibilityplus.config.title": "Accessibility Plus Configuration",
+    "gui.accessibilityplus.config.buttons.done": "Done",
+    "gui.accessibilityplus.config.buttons.cancel": "Cancel",
+    "gui.accessibilityplus.config.buttons.readblocks": "Read Blocks: %s",
+    "gui.accessibilityplus.config.buttons.readtooltips": "Read Tooltips: %s",
+    "gui.accessibilityplus.config.buttons.readsignscontents": "Read Sign Contents: %s",
+    "gui.accessibilityplus.config.buttons.inventorykeyboardcontrol": "Inventory Keyboard Control: %s",
     "key.categories.accessibilityplus.inventorycontrol": "Accessibility Plus (Inventory)",
     "key.accessibilityplus.left": "Move Left",
     "key.accessibilityplus.right": "Move Right",

@@ -7,6 +7,7 @@ import net.minecraft.text.Text;
 
 public class APButton extends WButton {
     private static APButton hoveredButton;
+    private static APButton focusedButton;
     private String hiddenText = "";
 
     public APButton(Text label) {
@@ -20,18 +21,31 @@ public class APButton extends WButton {
     @Override
     public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
         super.paint(matrices, x, y, mouseX, mouseY);
-        boolean hovered = (mouseX >= 0 && mouseY >= 0 && mouseX < getWidth() && mouseY < getHeight());
-        NarratorPlus narrator = NarratorPlus.getInstance();
-        String text = this.hiddenText != "" ? this.hiddenText : this.getLabel().getString();
-        if (hovered) {
-            hoveredButton = this;
-            if (!text.equals(narrator.lastText)) {
-                narrator.lastText = text;
-                NarratorPlus.narrate(text);
-            }
-        } else if (!hovered && hoveredButton == this) {
-            hoveredButton = null;
-            narrator.lastText = "";
-        }
+        // if (hoveredButton == this) {
+        // return;
+        // }
+        // boolean hovered = (mouseX >= 0 && mouseY >= 0 && mouseX < getWidth() &&
+        // mouseY < getHeight());
+        // if (hovered) {
+        // hoveredButton = this;
+        // NarratorPlus.narrate(this.getLabel().getString());
+        // } else if (this.isFocused()) {
+        // hoveredButton = this;
+        // NarratorPlus.narrate(this.getLabel().getString());
+        // }
+
+        // NarratorPlus narrator = NarratorPlus.getInstance();
+        // String text = this.hiddenText != "" ? this.hiddenText :
+        // this.getLabel().getString();
+        // if (hovered) {
+        // hoveredButton = this;
+        // if (!text.equals(narrator.lastText)) {
+        // narrator.lastText = text;
+        // NarratorPlus.narrate(text);
+        // }
+        // } else if (!hovered && hoveredButton == this) {
+        // hoveredButton = null;
+        // narrator.lastText = "";
+        // }
     }
 }

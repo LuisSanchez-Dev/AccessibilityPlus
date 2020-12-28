@@ -1,7 +1,10 @@
 package com.luissanchezdev.accessibilityplus;
 
 import com.luissanchezdev.accessibilityplus.mixin.AccessorHandledScreen;
+import com.luissanchezdev.accessibilityplus.gui.ConfigScreen;
+import com.luissanchezdev.accessibilityplus.gui.ConfigGui;
 import com.luissanchezdev.accessibilityplus.keyboard.KeyboardController;
+import com.luissanchezdev.accessibilityplus.config.Config;
 
 import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
 
@@ -24,6 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import org.lwjgl.glfw.GLFW;
 
 public class AccessibilityPlus implements ModInitializer {
+    public static KeyBinding CONFIG_KEY;
     public static AccessibilityPlus instance;
     public static NarratorPlus narrator;
     public static KeyboardController keyboardController;
@@ -31,6 +35,9 @@ public class AccessibilityPlus implements ModInitializer {
     @Override
     public void onInitialize() {
         instance = this;
+        CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.config",
+                InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_N, "key.categories.accessibilityplus.general"));
+
         narrator = new NarratorPlus();
         keyboardController = new KeyboardController();
         System.setProperty("java.awt.headless", "false");
@@ -39,6 +46,10 @@ public class AccessibilityPlus implements ModInitializer {
             if (client.player == null)
                 return;
 
+            while (CONFIG_KEY.wasPressed()) {
+                client.openScreen(new ConfigScreen(new ConfigGui(client.player)));
+                return;
+            }
             if (client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen) {
                 Slot hovered = ((AccessorHandledScreen) client.currentScreen).getFocusedSlot();
                 if (hovered != null && hovered.hasStack()) {
@@ -48,11 +59,6 @@ public class AccessibilityPlus implements ModInitializer {
                 }
             }
             if (client.currentScreen == null || !(client.currentScreen instanceof AccessorHandledScreen)) {
-                // System.setProperty("java.library.path", myLibraryPath);
-                // client.player.sendMessage(new
-                // net.minecraft.text.LiteralText(System.getProperty("java.library.path")),
-                // false);
-                // ;
                 HitResult hit = client.crosshairTarget;
                 switch (hit.getType()) {
                     case MISS:
@@ -68,8 +74,11 @@ public class AccessibilityPlus implements ModInitializer {
                             if (!block.equals(narrator.lastBlock) || !blockPos.equals(narrator.lastBlockPos)) {
                                 narrator.lastBlock = block;
                                 narrator.lastBlockPos = blockPos;
-                                String output = block.getName().getString();
-                                if (blockState.toString().contains("sign")) {
+                                String output = "";
+                                if (Config.readBlocksEnabled()) {
+                                    output += block.getName().getString();
+                                }
+                                if (blockState.toString().contains("sign") && Config.readSignsContentsEnabled()) {
                                     SignBlockEntity signentity = (SignBlockEntity) client.world
                                             .getBlockEntity(blockPos);
                                     output += " says: ";
@@ -78,7 +87,9 @@ public class AccessibilityPlus implements ModInitializer {
                                     output += "3: " + signentity.getTextOnRow(2).getString() + ", ";
                                     output += "4: " + signentity.getTextOnRow(3).getString();
                                 }
-                                NarratorPlus.narrate(output);
+                                if (!output.equals("")) {
+                                    NarratorPlus.narrate(output);
+                                }
                             }
                         } finally {
                         }
