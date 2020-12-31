@@ -4,6 +4,7 @@ import com.luissanchezdev.accessibilityplus.mixin.AccessorHandledScreen;
 import com.luissanchezdev.accessibilityplus.gui.ConfigScreen;
 import com.luissanchezdev.accessibilityplus.gui.ConfigGui;
 import com.luissanchezdev.accessibilityplus.keyboard.KeyboardController;
+import com.luissanchezdev.accessibilityplus.keyboard.ChatReader;
 import com.luissanchezdev.accessibilityplus.config.Config;
 
 import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
@@ -31,6 +32,7 @@ public class AccessibilityPlus implements ModInitializer {
     public static AccessibilityPlus instance;
     public static NarratorPlus narrator;
     public static KeyboardController keyboardController;
+    public static ChatReader chatReader;
 
     @Override
     public void onInitialize() {
@@ -40,6 +42,7 @@ public class AccessibilityPlus implements ModInitializer {
 
         narrator = new NarratorPlus();
         keyboardController = new KeyboardController();
+        chatReader = new ChatReader();
         System.setProperty("java.awt.headless", "false");
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
