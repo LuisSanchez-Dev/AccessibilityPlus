@@ -79,13 +79,16 @@ public class AccessibilityPlus implements ModInitializer {
                                     output += block.getName().getString();
                                 }
                                 if (blockState.toString().contains("sign") && Config.readSignsContentsEnabled()) {
-                                    SignBlockEntity signentity = (SignBlockEntity) client.world
-                                            .getBlockEntity(blockPos);
-                                    output += " says: ";
-                                    output += "1: " + signentity.getTextOnRow(0).getString() + ", ";
-                                    output += "2: " + signentity.getTextOnRow(1).getString() + ", ";
-                                    output += "3: " + signentity.getTextOnRow(2).getString() + ", ";
-                                    output += "4: " + signentity.getTextOnRow(3).getString();
+                                    try {
+                                        SignBlockEntity signentity = (SignBlockEntity) client.world
+                                                .getBlockEntity(blockPos);
+                                        output += " says: ";
+                                        output += "1: " + signentity.getTextOnRow(0).getString() + ", ";
+                                        output += "2: " + signentity.getTextOnRow(1).getString() + ", ";
+                                        output += "3: " + signentity.getTextOnRow(2).getString() + ", ";
+                                        output += "4: " + signentity.getTextOnRow(3).getString();
+                                    } finally {
+                                    }
                                 }
                                 if (!output.equals("")) {
                                     NarratorPlus.narrate(output);
