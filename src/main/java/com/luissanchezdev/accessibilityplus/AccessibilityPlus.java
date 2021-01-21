@@ -6,8 +6,6 @@ import com.luissanchezdev.accessibilityplus.gui.ConfigGui;
 import com.luissanchezdev.accessibilityplus.keyboard.KeyboardController;
 import com.luissanchezdev.accessibilityplus.config.Config;
 
-import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
-
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -15,10 +13,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.util.ActionResult;
 
 import net.minecraft.block.entity.SignBlockEntity;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.hit.BlockHitResult;
@@ -28,6 +24,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class AccessibilityPlus implements ModInitializer {
     public static KeyBinding CONFIG_KEY;
+    public static KeyBinding TELL_KEY;
     public static AccessibilityPlus instance;
     public static NarratorPlus narrator;
     public static KeyboardController keyboardController;
@@ -37,6 +34,8 @@ public class AccessibilityPlus implements ModInitializer {
         instance = this;
         CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.config",
                 InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_N, "key.categories.accessibilityplus.general"));
+        TELL_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.tellitem",
+                InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "key.categories.accessibilityplus.general"));
 
         narrator = new NarratorPlus();
         keyboardController = new KeyboardController();
@@ -46,9 +45,12 @@ public class AccessibilityPlus implements ModInitializer {
             if (client.player == null)
                 return;
 
-            while (CONFIG_KEY.wasPressed()) {
+            if (CONFIG_KEY.wasPressed()) {
                 client.openScreen(new ConfigScreen(new ConfigGui(client.player)));
                 return;
+            }
+            if (TELL_KEY.wasPressed()) {
+                NarratorPlus.narrate(client.player.inventory.getStack(client.player.inventory.selectedSlot).getItem().getName().getString());
             }
             if (client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen) {
                 Slot hovered = ((AccessorHandledScreen) client.currentScreen).getFocusedSlot();
@@ -76,7 +78,8 @@ public class AccessibilityPlus implements ModInitializer {
                                 narrator.lastBlockPos = blockPos;
                                 String output = "";
                                 if (Config.readBlocksEnabled()) {
-                                    output += block.getName().getString();
+                                    String blockName = block.getName().getString();
+                                    if(!blockName.equals("Air")) output += blockName;
                                 }
                                 if (blockState.toString().contains("sign") && Config.readSignsContentsEnabled()) {
                                     try {

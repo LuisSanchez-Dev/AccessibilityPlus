@@ -1,12 +1,9 @@
 package com.luissanchezdev.accessibilityplus.gui.widgets;
 
+import com.luissanchezdev.accessibilityplus.NarratorPlus;
 import com.luissanchezdev.accessibilityplus.config.Config;
 
 import io.github.cottonmc.cotton.gui.widget.WButton;
-import net.minecraft.client.util.math.MatrixStack;
-import com.luissanchezdev.accessibilityplus.NarratorPlus;
-import net.minecraft.text.Text;
-
 import net.minecraft.text.TranslatableText;
 
 public class ConfigButton extends WButton {

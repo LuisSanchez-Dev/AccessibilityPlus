@@ -47,6 +47,9 @@ dependencies {
     // Detect hotkeys in screen
     modApi "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
     include "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
+
+	modImplementation "net.sf.sociaal:freetts:1.2.2"
+    include "net.sf.sociaal:freetts:1.2.2"
 }
 
 processResources {

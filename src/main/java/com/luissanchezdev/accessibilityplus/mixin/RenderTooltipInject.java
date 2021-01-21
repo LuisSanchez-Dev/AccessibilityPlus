@@ -1,15 +1,16 @@
 package com.luissanchezdev.accessibilityplus.mixin;
 
-import com.luissanchezdev.accessibilityplus.config.Config;
+import java.util.List;
+
 import com.luissanchezdev.accessibilityplus.NarratorPlus;
+import com.luissanchezdev.accessibilityplus.config.Config;
 import com.luissanchezdev.accessibilityplus.keyboard.KeyboardController;
 
-import java.util.List;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.lwjgl.system.CallbackI;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;

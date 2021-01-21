@@ -1,23 +1,18 @@
 package com.luissanchezdev.accessibilityplus.gui;
 
-import com.google.gson.Gson;
-
-import com.luissanchezdev.accessibilityplus.gui.widgets.ConfigButton;
-import com.luissanchezdev.accessibilityplus.NarratorPlus;
 import com.luissanchezdev.accessibilityplus.config.Config;
-import com.luissanchezdev.accessibilityplus.config.SerializableConfig;
+import com.luissanchezdev.accessibilityplus.gui.widgets.ConfigButton;
 
-import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
-import io.github.cottonmc.cotton.gui.widget.*;
-import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
-import net.minecraft.block.NetherWartBlock;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.TranslatableText;
+import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
+import io.github.cottonmc.cotton.gui.widget.WButton;
+import io.github.cottonmc.cotton.gui.widget.WGridPanel;
+import io.github.cottonmc.cotton.gui.widget.WLabel;
+import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.text.TranslatableText;
 
 public class ConfigGui extends LightweightGuiDescription {
-    private SerializableConfig tempConfig;
     private ClientPlayerEntity player;
 
     public ConfigGui(ClientPlayerEntity player) {

@@ -1,23 +1,19 @@
 package com.luissanchezdev.accessibilityplus.keyboard;
 
-import com.luissanchezdev.accessibilityplus.mixin.AccessorSlot;
-
-import java.lang.Math;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 
-import net.minecraft.screen.slot.Slot;
+import com.luissanchezdev.accessibilityplus.mixin.AccessorSlot;
 
 // Inventories
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.CraftingInventory;
-
+import net.minecraft.inventory.CraftingResultInventory;
 // Slots
 import net.minecraft.screen.slot.FurnaceFuelSlot;
 import net.minecraft.screen.slot.FurnaceOutputSlot;
-import net.minecraft.screen.EnchantmentScreenHandler;
+import net.minecraft.screen.slot.Slot;
 
 public class SlotsGroup {
     public String name;

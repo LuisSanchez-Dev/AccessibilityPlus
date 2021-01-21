@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 import java.io.FileWriter; // Import the FileWriter class
 
 public class Config {
-    private static SerializableConfig config;
     private static JsonObject data;
     private static String CONFIG_PATH = Paths.get("config", "accessibilityplus", "config.json").toString();
 
