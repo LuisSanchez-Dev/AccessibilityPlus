@@ -44,13 +44,15 @@ public class AccessibilityPlus implements ModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null)
                 return;
+            
+            NarratorPlus.getInstance().playerAngle = client.player.renderYaw%360;
 
             if (CONFIG_KEY.wasPressed()) {
                 client.openScreen(new ConfigScreen(new ConfigGui(client.player)));
                 return;
             }
             if (TELL_KEY.wasPressed()) {
-                NarratorPlus.narrate(client.player.inventory.getStack(client.player.inventory.selectedSlot).getItem().getName().getString());
+                NarratorPlus.narrate(client.player.inventory.getStack(client.player.inventory.selectedSlot).getName().getString());
             }
             if (client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen) {
                 Slot hovered = ((AccessorHandledScreen) client.currentScreen).getFocusedSlot();
@@ -62,9 +64,14 @@ public class AccessibilityPlus implements ModInitializer {
             }
             if (client.currentScreen == null || !(client.currentScreen instanceof AccessorHandledScreen)) {
                 HitResult hit = client.crosshairTarget;
+                String output = "";
                 switch (hit.getType()) {
                     case MISS:
-                        // nothing near enough
+                        if(narrator.lastBlockPos != null){
+                            if(Config.readBlocksEnabled()) output += "Air";
+                            narrator.lastBlockPos = null;
+                            narrator.lastBlock = null;
+                        }
                         break;
                     case BLOCK:
                         try {
@@ -76,7 +83,6 @@ public class AccessibilityPlus implements ModInitializer {
                             if (!block.equals(narrator.lastBlock) || !blockPos.equals(narrator.lastBlockPos)) {
                                 narrator.lastBlock = block;
                                 narrator.lastBlockPos = blockPos;
-                                String output = "";
                                 if (Config.readBlocksEnabled()) {
                                     String blockName = block.getName().getString();
                                     if(!blockName.equals("Air")) output += blockName;
@@ -93,9 +99,6 @@ public class AccessibilityPlus implements ModInitializer {
                                     } finally {
                                     }
                                 }
-                                if (!output.equals("")) {
-                                    NarratorPlus.narrate(output);
-                                }
                             }
                         } finally {
                         }
@@ -103,6 +106,9 @@ public class AccessibilityPlus implements ModInitializer {
                     case ENTITY:
                         // Entity in range
                         break;
+                }
+                if (!output.equals("")) {
+                    NarratorPlus.narrate(output);
                 }
             }
         });

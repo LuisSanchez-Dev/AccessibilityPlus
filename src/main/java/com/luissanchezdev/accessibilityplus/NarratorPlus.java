@@ -1,5 +1,6 @@
 package com.luissanchezdev.accessibilityplus;
 
+import java.beans.PropertyVetoException;
 import java.util.Locale;
 
 import javax.speech.Central;
@@ -33,6 +34,10 @@ public class NarratorPlus {
     private SynthesizerModeDesc desc;
     private Synthesizer synthesizer;
     private Voice voice;
+    private boolean newText = false;
+    private String speakText = "";
+    private float defaultPitch;
+    public float playerAngle = 0;
 
     public NarratorPlus() {
         instance = this;
@@ -66,7 +71,32 @@ public class NarratorPlus {
                         }
                     }
                     synthesizer.getSynthesizerProperties().setVoice(voice);
-                    synthesizer.getSynthesizerProperties().setSpeakingRate(4*synthesizer.getSynthesizerProperties().getSpeakingRate());
+                    synthesizer.getSynthesizerProperties()
+                            .setSpeakingRate(4 * synthesizer.getSynthesizerProperties().getSpeakingRate());
+                    defaultPitch = synthesizer.getSynthesizerProperties().getPitch();
+
+                    new Thread(() -> {
+                        while (true) {
+                            if (newText) {
+                                try {
+                                    synthesizer.getSynthesizerProperties()
+                                            .setPitch(defaultPitch+80*(playerAngle/360));
+                                } catch (PropertyVetoException e) {
+                                    e.printStackTrace();
+                                }
+                                synthesizer.cancelAll();
+                                if(!speakText.contains(" ")) speakText += " " + speakText;
+                                speakText = speakText.replaceAll("\s+",", ");
+                                synthesizer.speakPlainText(speakText, null);
+                                newText = false;
+                            }
+                            try {
+                                Thread.sleep(10);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                }, "narration").start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -88,10 +118,8 @@ public class NarratorPlus {
 
             instance.nvda.nvdaController_speakText(ch);
         } else if (instance.voice != null) {
-            new Thread(()->{
-                instance.synthesizer.cancel();
-                instance.synthesizer.speakPlainText(text, null);
-            }).start();
+            instance.speakText = text;
+            instance.newText = true;
         }else {
             NarratorManager.INSTANCE.narrate(text);
         }
