@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 
 @Mixin(InGameHud.class)
 public class TitleInject {
-    @Inject(at = @At("HEAD"), method = "setTitles(Lnet/minecraft/text/Text;Lnet/minecraft/text/Text;I;I;I)V")
+    @Inject(at = @At("HEAD"), method = "setTitles(Lnet/minecraft/text/Text;Lnet/minecraft/text/Text;III)V")
     public void speakTitle(Text title, Text subtitle, int titleFadeInTicks, int titleRemainTicks, int titleFadeOutTicks, CallbackInfo ci) {
         if(title != null) NarratorPlus.narrate(title.getString());
     }

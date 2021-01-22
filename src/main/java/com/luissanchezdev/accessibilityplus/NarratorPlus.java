@@ -86,7 +86,6 @@ public class NarratorPlus {
                                 }
                                 synthesizer.cancelAll();
                                 if(!speakText.contains(" ")) speakText += " " + speakText;
-                                speakText = speakText.replaceAll("\s+",", ");
                                 synthesizer.speakPlainText(speakText, null);
                                 newText = false;
                             }

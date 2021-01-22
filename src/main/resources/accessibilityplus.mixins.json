@@ -8,6 +8,7 @@
         "AccessorHandledScreen",
         "AccessorSlot",
         "ActionbarInject",
+        "TitleInject",
         "RenderTooltipInject",
         "NarratorManagerInject"
     ],
