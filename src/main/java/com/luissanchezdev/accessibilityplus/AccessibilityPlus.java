@@ -50,6 +50,10 @@ public class AccessibilityPlus implements ModInitializer {
                 client.openScreen(new ConfigScreen(new ConfigGui(client.player)));
                 return;
             }
+            
+            /* Previous method of getting the item count
+               New method in ItemStackTooltipInject.java in /mixin
+               
             if (client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen) {
                 Slot hovered = ((AccessorHandledScreen) client.currentScreen).getFocusedSlot();
                 if (hovered != null && hovered.hasStack()) {
@@ -58,6 +62,7 @@ public class AccessibilityPlus implements ModInitializer {
                     narrator.prefixAmount = "";
                 }
             }
+            */
             if (client.currentScreen == null || !(client.currentScreen instanceof AccessorHandledScreen)) {
                 HitResult hit = client.crosshairTarget;
                 switch (hit.getType()) {
