@@ -21,7 +21,7 @@ public class ItemStackTooltipInject {
 	private void getTooltipMixin(PlayerEntity player, TooltipContext context,CallbackInfoReturnable<List<Text>> info) throws Exception {
 		if(MinecraftClient.getInstance().world == null) return;
 		ItemStack itemStack = (ItemStack) ((Object) this);
-		if(!itemStack.isStackable()) return;
+		if(!itemStack.isStackable() || itemStack.getItem().isDamageable()) return;
 		List<Text> list = info.getReturnValue();
 		
 		MutableText mutableText = new LiteralText("").append(list.get(0));

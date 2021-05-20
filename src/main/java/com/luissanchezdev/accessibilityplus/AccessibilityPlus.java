@@ -1,36 +1,44 @@
 package com.luissanchezdev.accessibilityplus;
 
-import com.luissanchezdev.accessibilityplus.mixin.AccessorHandledScreen;
-import com.luissanchezdev.accessibilityplus.gui.ConfigScreen;
-import com.luissanchezdev.accessibilityplus.gui.ConfigGui;
-import com.luissanchezdev.accessibilityplus.keyboard.KeyboardController;
-import com.luissanchezdev.accessibilityplus.config.Config;
+import java.util.HashMap;
+import java.util.Map;
 
-import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
+import org.lwjgl.glfw.GLFW;
+
+import com.luissanchezdev.accessibilityplus.config.Config;
+import com.luissanchezdev.accessibilityplus.gui.ConfigGui;
+import com.luissanchezdev.accessibilityplus.gui.ConfigScreen;
+import com.luissanchezdev.accessibilityplus.keyboard.KeyboardController;
+import com.luissanchezdev.accessibilityplus.mixin.AccessorHandledScreen;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.util.ActionResult;
-
+import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.KeyBinding;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import org.lwjgl.glfw.GLFW;
 
 public class AccessibilityPlus implements ModInitializer {
     public static KeyBinding CONFIG_KEY;
     public static AccessibilityPlus instance;
     public static NarratorPlus narrator;
     public static KeyboardController keyboardController;
+
+    public static int currentColumn = 0;
+    public static int currentRow = 0;
+    public static boolean isDPressed, isAPressed, isWPressed, isSPressed, isRPressed, isFPressed;
+    public static boolean isPointingAtCraftingBlock = false;
+	public static Map<String, Integer> mainThreadMap;
+	private static CustomWait mainThreadCustomWait;
+	private HudScreenHandler hudScreenHandler;
 
     @Override
     public void onInitialize() {
@@ -41,15 +49,43 @@ public class AccessibilityPlus implements ModInitializer {
         narrator = new NarratorPlus();
         keyboardController = new KeyboardController();
         System.setProperty("java.awt.headless", "false");
+        
+
+		mainThreadMap = new HashMap<String, Integer>();
+        mainThreadCustomWait = new CustomWait();
+        mainThreadCustomWait.startThread();
+        
+        hudScreenHandler = new HudScreenHandler();
+        
+        
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+        	isDPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.d").getCode()));
+        	isAPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.a").getCode()));
+        	isWPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.w").getCode()));
+        	isSPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.s").getCode()));
+        	isRPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.r").getCode()));
+        	isFPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.f").getCode()));
+        	
+        	if (client.currentScreen == null) {
+        		currentColumn = 0;
+        		currentRow = 0;
+        	} else {
+        		Screen screen =  client.currentScreen;
+        		hudScreenHandler.screenHandler(screen);	            	
+        	}
+        	
             if (client.player == null)
                 return;
+            
+
+            
 
             while (CONFIG_KEY.wasPressed()) {
                 client.openScreen(new ConfigScreen(new ConfigGui(client.player)));
                 return;
             }
+            
             
             /* Previous method of getting the item count
                New method in ItemStackTooltipInject.java in /mixin
@@ -76,6 +112,10 @@ public class AccessibilityPlus implements ModInitializer {
                             BlockState blockState = client.world.getBlockState(blockPos);
 
                             Block block = blockState.getBlock();
+                            
+                            if(block instanceof CraftingTableBlock) isPointingAtCraftingBlock = true;
+                            else isPointingAtCraftingBlock = false;
+                            
                             if (!block.equals(narrator.lastBlock) || !blockPos.equals(narrator.lastBlockPos)) {
                                 narrator.lastBlock = block;
                                 narrator.lastBlockPos = blockPos;
@@ -111,4 +151,5 @@ public class AccessibilityPlus implements ModInitializer {
 
         System.out.println("Hello Fabric world!");
     }
+
 }
