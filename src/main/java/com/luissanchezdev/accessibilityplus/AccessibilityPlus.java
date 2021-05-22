@@ -16,9 +16,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.entity.SignBlockEntity;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
@@ -34,10 +32,10 @@ public class AccessibilityPlus implements ModInitializer {
 
     public static int currentColumn = 0;
     public static int currentRow = 0;
-    public static boolean isDPressed, isAPressed, isWPressed, isSPressed, isRPressed, isFPressed;
+    public static boolean isDPressed, isAPressed, isWPressed, isSPressed, isRPressed, isFPressed, isCPressed, isVPressed, isTPressed, isEnterPressed, isLeftArrowPressed, isRightArrowPressed;
     public static boolean isPointingAtCraftingBlock = false;
-	public static Map<String, Integer> mainThreadMap;
-	private static CustomWait mainThreadCustomWait;
+	public static Map<String, Integer> delayThreadMap;
+	private static CustomWait delayThread;
 	private HudScreenHandler hudScreenHandler;
 
     @Override
@@ -51,34 +49,44 @@ public class AccessibilityPlus implements ModInitializer {
         System.setProperty("java.awt.headless", "false");
         
 
-		mainThreadMap = new HashMap<String, Integer>();
-        mainThreadCustomWait = new CustomWait();
-        mainThreadCustomWait.startThread();
+		delayThreadMap = new HashMap<String, Integer>();
+        delayThread = new CustomWait();
+        delayThread.startThread();
         
         hudScreenHandler = new HudScreenHandler();
         
         
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-        	isDPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.d").getCode()));
-        	isAPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.a").getCode()));
-        	isWPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.w").getCode()));
-        	isSPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.s").getCode()));
-        	isRPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.r").getCode()));
-        	isFPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.f").getCode()));
         	
-        	if (client.currentScreen == null) {
-        		currentColumn = 0;
-        		currentRow = 0;
-        	} else {
-        		Screen screen =  client.currentScreen;
-        		hudScreenHandler.screenHandler(screen);	            	
+        	isDPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.d").getCode()));
+        	isAPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.a").getCode()));
+        	isWPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.w").getCode()));
+        	isSPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.s").getCode()));
+        	isRPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.r").getCode()));
+        	isFPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.f").getCode()));
+        	isCPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.c").getCode()));
+        	isVPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.v").getCode()));
+        	isTPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.t").getCode()));
+        	isEnterPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.enter").getCode()));
+        	isLeftArrowPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left").getCode()));
+        	isRightArrowPressed= (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right").getCode()));
+        	
+        	if(Config.inventoryKeyboardControlEnabled()) {
+		    	if (client.currentScreen == null) {
+		    		currentColumn = 0;
+		    		currentRow = 0;
+		    		HudScreenHandler.isSearchingRecipies = false;
+		    		HudScreenHandler.bookPageIndex = 0;
+		    	} else {
+		    		Screen screen =  client.currentScreen;
+		    		hudScreenHandler.screenHandler(screen);           	
+		    	}
         	}
         	
             if (client.player == null)
                 return;
             
-
             
 
             while (CONFIG_KEY.wasPressed()) {
@@ -99,6 +107,8 @@ public class AccessibilityPlus implements ModInitializer {
                 }
             }
             */
+            
+            
             if (client.currentScreen == null || !(client.currentScreen instanceof AccessorHandledScreen)) {
                 HitResult hit = client.crosshairTarget;
                 switch (hit.getType()) {
@@ -113,8 +123,6 @@ public class AccessibilityPlus implements ModInitializer {
 
                             Block block = blockState.getBlock();
                             
-                            if(block instanceof CraftingTableBlock) isPointingAtCraftingBlock = true;
-                            else isPointingAtCraftingBlock = false;
                             
                             if (!block.equals(narrator.lastBlock) || !blockPos.equals(narrator.lastBlockPos)) {
                                 narrator.lastBlock = block;

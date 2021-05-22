@@ -15,5 +15,7 @@
     "key.accessibilityplus.home": "Go To First Slot / Group",
     "key.accessibilityplus.end": "Go To Last Slot / Group",
     "key.accessibilityplus.mouseclick": "Mouse Click",
-    "key.accessibilityplus.mouserightclick": "Mouse Right Click"
+    "key.accessibilityplus.mouserightclick": "Mouse Right Click",
+    "key.accessibilityplus.config": "Config Menu Key",
+    "key.categories.accessibilityplus.general": "Accessibility Plus (General)"
 }

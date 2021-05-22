@@ -6,6 +6,7 @@ import java.awt.PointerInfo;
 import java.awt.Robot;
 import java.util.List;
 
+import com.luissanchezdev.accessibilityplus.HudScreenHandler;
 import com.luissanchezdev.accessibilityplus.NarratorPlus;
 import com.luissanchezdev.accessibilityplus.config.Config;
 import com.luissanchezdev.accessibilityplus.mixin.AccessorHandledScreen;
@@ -109,7 +110,7 @@ public class KeyboardController {
 
     private static ActionResult onKeyPress(MinecraftClient mc, Screen currentScreen, int keyCode, int scanCode,
             int modifiers) {
-        if (screen != null && Config.inventoryKeyboardControlEnabled()) {
+        if (screen != null && Config.inventoryKeyboardControlEnabled() && !HudScreenHandler.isSearchingRecipies) {
             if (LEFT_KEY.matchesKey(keyCode, scanCode)) {
                 focusSlotAt(FocusDirection.LEFT);
             } else if (RIGHT_KEY.matchesKey(keyCode, scanCode)) {

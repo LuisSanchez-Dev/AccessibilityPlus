@@ -12,7 +12,7 @@
         "sources": "https://github.com/LuisSanchez-Dev/AccessibilityPlus"
     },
     "license": "MIT",
-    "icon": "assets/AccessibilityPlus/icon.png",
+    "icon": "assets/accessibilityplus/icon.png",
     "environment": "*",
     "entrypoints": {
         "main": [
