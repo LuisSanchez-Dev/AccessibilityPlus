@@ -596,25 +596,27 @@ public class HudScreenHandler {
 		 		@SuppressWarnings("static-access")
 				String text = (bookScreen.readPages(MinecraftClient.getInstance().player.getMainHandStack().getTag()).get(bookPageIndex)+"").replace("{\"text\":\"", "").replaceAll("\\\\n", ", ");
 		 		NarratorPlus.narrate(text);
-		 		bookPageIndex++;
-		 		if(bookPageIndex==maxIndex) bookPageIndex=0;
 				AccessibilityPlus.delayThreadMap.put("read_page_screen", 200);
 		 	}
 			
 			// Left Arrow Pressed :- Prev Page
-			if (!AccessibilityPlus.delayThreadMap.containsKey("next_page_screen") && AccessibilityPlus.isLeftArrowPressed) {
+			if (!AccessibilityPlus.delayThreadMap.containsKey("prev_page_screen") && AccessibilityPlus.isLeftArrowPressed) {
+				bookPageIndex--;
+				if(bookPageIndex<0) bookPageIndex = 0;
 				robot.mouseMove(nextX + windowPosX, nextY + windowPosY);
 				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-				AccessibilityPlus.delayThreadMap.put("next_page_screen", 200);
+				AccessibilityPlus.delayThreadMap.put("prev_page_screen", 200);
 			}
 
 			// Right Arrow Pressed :- Next Page
-			if (!AccessibilityPlus.delayThreadMap.containsKey("prev_page_screen") && AccessibilityPlus.isRightArrowPressed) {
+			if (!AccessibilityPlus.delayThreadMap.containsKey("next_page_screen") && AccessibilityPlus.isRightArrowPressed) {
+				bookPageIndex++;
+				if(bookPageIndex>=maxIndex) bookPageIndex = maxIndex-1;
 				robot.mouseMove(prevX + windowPosX, prevY + windowPosY);
 				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-				AccessibilityPlus.delayThreadMap.put("prev_page_screen", 200);
+				AccessibilityPlus.delayThreadMap.put("next_page_screen", 200);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
