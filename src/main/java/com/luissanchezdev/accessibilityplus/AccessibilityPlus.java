@@ -33,7 +33,6 @@ public class AccessibilityPlus implements ModInitializer {
     public static int currentColumn = 0;
     public static int currentRow = 0;
     public static boolean isDPressed, isAPressed, isWPressed, isSPressed, isRPressed, isFPressed, isCPressed, isVPressed, isTPressed, isEnterPressed, isLeftArrowPressed, isRightArrowPressed;
-    public static boolean isPointingAtCraftingBlock = false;
 	public static Map<String, Integer> delayThreadMap;
 	private static CustomWait delayThread;
 	private HudScreenHandler hudScreenHandler;
@@ -59,20 +58,21 @@ public class AccessibilityPlus implements ModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
         	
-        	isDPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.d").getCode()));
-        	isAPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.a").getCode()));
-        	isWPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.w").getCode()));
-        	isSPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.s").getCode()));
-        	isRPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.r").getCode()));
-        	isFPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.f").getCode()));
-        	isCPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.c").getCode()));
-        	isVPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.v").getCode()));
-        	isTPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.t").getCode()));
-        	isEnterPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.enter").getCode()));
-        	isLeftArrowPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left").getCode()));
-        	isRightArrowPressed= (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right").getCode()));
-        	
         	if(Config.inventoryKeyboardControlEnabled()) {
+        		
+	        	isDPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.d").getCode()));
+	        	isAPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.a").getCode()));
+	        	isWPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.w").getCode()));
+	        	isSPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.s").getCode()));
+	        	isRPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.r").getCode()));
+	        	isFPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.f").getCode()));
+	        	isCPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.c").getCode()));
+	        	isVPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.v").getCode()));
+	        	isTPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.t").getCode()));
+	        	isEnterPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.enter").getCode()));
+	        	isLeftArrowPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left").getCode()));
+	        	isRightArrowPressed= (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right").getCode()));
+        	
 		    	if (client.currentScreen == null) {
 		    		currentColumn = 0;
 		    		currentRow = 0;
@@ -93,20 +93,6 @@ public class AccessibilityPlus implements ModInitializer {
                 client.openScreen(new ConfigScreen(new ConfigGui(client.player)));
                 return;
             }
-            
-            
-            /* Previous method of getting the item count
-               New method in ItemStackTooltipInject.java in /mixin
-               
-            if (client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen) {
-                Slot hovered = ((AccessorHandledScreen) client.currentScreen).getFocusedSlot();
-                if (hovered != null && hovered.hasStack()) {
-                    narrator.prefixAmount = String.valueOf(hovered.getStack().getCount()) + " ";
-                } else {
-                    narrator.prefixAmount = "";
-                }
-            }
-            */
             
             
             if (client.currentScreen == null || !(client.currentScreen instanceof AccessorHandledScreen)) {

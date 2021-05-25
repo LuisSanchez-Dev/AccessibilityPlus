@@ -160,11 +160,6 @@ public class KeyboardController {
             narrateCursorStack = false;
             ItemStack cursorStack = client.player.inventory.getCursorStack();
             if (!cursorStack.isEmpty()) {
-
-                /* Previous method of getting the item count
-                   New method in ItemStackTooltipInject.java in /mixin
-                String amount = String.valueOf(cursorStack.getCount());
-                */
             	
                 String message = "On cursor: ";
                 for (Text line : cursorStack.getTooltip(client.player, TooltipContext.Default.NORMAL)) {
@@ -240,11 +235,6 @@ public class KeyboardController {
         if (!currentSlot.hasStack()) {
             message += " Empty";
         } else {
-
-            /* Previous method of getting the item count
-               New method in ItemStackTooltipInject.java in /mixin
-            message += String.valueOf(currentSlot.getStack().getCount()) + " ";
-            */
             List<Text> lines = currentSlot.getStack().getTooltip(client.player, TooltipContext.Default.NORMAL);
             for (Text line : lines) {
                 message += line.getString() + ", ";

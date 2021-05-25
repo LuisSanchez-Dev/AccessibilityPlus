@@ -565,10 +565,10 @@ public class HudScreenHandler {
 		
 	}
 	
+	@SuppressWarnings("static-access")
 	private void bookScreen(Screen screen) {
 		MinecraftClient.getInstance().player.getMainHandStack().getTag();
 		BookScreen bookScreen = (BookScreen) screen;
-		@SuppressWarnings("static-access")
 		int maxIndex = bookScreen.readPages(MinecraftClient.getInstance().player.getMainHandStack().getTag()).size();
 		MinecraftClient client = MinecraftClient.getInstance();
 		
@@ -593,8 +593,16 @@ public class HudScreenHandler {
 			
 			// R Pressed :- Read Current Page
 			if(AccessibilityPlus.isRPressed && !AccessibilityPlus.delayThreadMap.containsKey("read_page_screen")) {
-		 		@SuppressWarnings("static-access")
-				String text = (bookScreen.readPages(MinecraftClient.getInstance().player.getMainHandStack().getTag()).get(bookPageIndex)+"").replace("{\"text\":\"", "").replaceAll("\\\\n", ", ");
+				String text = "";
+		 		try {
+					text = (bookScreen.readPages(MinecraftClient.getInstance().player.getMainHandStack().getTag()).get(bookPageIndex)+"").replace("{\"text\":\"", "").replaceAll("\\\\n", ", ");
+				} catch (Exception e) {
+					try {
+						text = (bookScreen.readPages(MinecraftClient.getInstance().player.getOffHandStack().getTag()).get(bookPageIndex)+"").replace("{\"text\":\"", "").replaceAll("\\\\n", ", ");
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
 		 		NarratorPlus.narrate(text);
 				AccessibilityPlus.delayThreadMap.put("read_page_screen", 200);
 		 	}
