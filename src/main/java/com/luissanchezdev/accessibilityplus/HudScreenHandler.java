@@ -544,16 +544,16 @@ public class HudScreenHandler {
 				AccessibilityPlus.delayThreadMap.put("read_page_screen", 200);
 			}
 			
-			// Left Arrow Pressed :- Prev Page
-			if (!AccessibilityPlus.delayThreadMap.containsKey("next_page_screen") && AccessibilityPlus.isLeftArrowPressed) {
+			// A Pressed :- Prev Page
+			if (!AccessibilityPlus.delayThreadMap.containsKey("next_page_screen") && AccessibilityPlus.isAPressed) {
 				robot.mouseMove(nextX + windowPosX, nextY + windowPosY);
 				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 				AccessibilityPlus.delayThreadMap.put("next_page_screen", 200);
 			}
 
-			// Right Arrow Pressed :- Next Page
-			if (!AccessibilityPlus.delayThreadMap.containsKey("prev_page_screen") && AccessibilityPlus.isRightArrowPressed) {
+			// D Pressed :- Next Page
+			if (!AccessibilityPlus.delayThreadMap.containsKey("prev_page_screen") && AccessibilityPlus.isDPressed) {
 				robot.mouseMove(prevX + windowPosX, prevY + windowPosY);
 				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
@@ -607,8 +607,8 @@ public class HudScreenHandler {
 				AccessibilityPlus.delayThreadMap.put("read_page_screen", 200);
 		 	}
 			
-			// Left Arrow Pressed :- Prev Page
-			if (!AccessibilityPlus.delayThreadMap.containsKey("prev_page_screen") && AccessibilityPlus.isLeftArrowPressed) {
+			// A Pressed :- Prev Page
+			if (!AccessibilityPlus.delayThreadMap.containsKey("prev_page_screen") && AccessibilityPlus.isAPressed) {
 				bookPageIndex--;
 				if(bookPageIndex<0) bookPageIndex = 0;
 				robot.mouseMove(nextX + windowPosX, nextY + windowPosY);
@@ -617,8 +617,8 @@ public class HudScreenHandler {
 				AccessibilityPlus.delayThreadMap.put("prev_page_screen", 200);
 			}
 
-			// Right Arrow Pressed :- Next Page
-			if (!AccessibilityPlus.delayThreadMap.containsKey("next_page_screen") && AccessibilityPlus.isRightArrowPressed) {
+			// D Pressed :- Next Page
+			if (!AccessibilityPlus.delayThreadMap.containsKey("next_page_screen") && AccessibilityPlus.isDPressed) {
 				bookPageIndex++;
 				if(bookPageIndex>=maxIndex) bookPageIndex = maxIndex-1;
 				robot.mouseMove(prevX + windowPosX, prevY + windowPosY);

@@ -32,7 +32,7 @@ public class AccessibilityPlus implements ModInitializer {
 
     public static int currentColumn = 0;
     public static int currentRow = 0;
-    public static boolean isDPressed, isAPressed, isWPressed, isSPressed, isRPressed, isFPressed, isCPressed, isVPressed, isTPressed, isEnterPressed, isLeftArrowPressed, isRightArrowPressed;
+    public static boolean isDPressed, isAPressed, isWPressed, isSPressed, isRPressed, isFPressed, isCPressed, isVPressed, isTPressed, isEnterPressed;
 	public static Map<String, Integer> delayThreadMap;
 	private static CustomWait delayThread;
 	private HudScreenHandler hudScreenHandler;
@@ -70,8 +70,6 @@ public class AccessibilityPlus implements ModInitializer {
 	        	isVPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.v").getCode()));
 	        	isTPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.t").getCode()));
 	        	isEnterPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.enter").getCode()));
-	        	isLeftArrowPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left").getCode()));
-	        	isRightArrowPressed= (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right").getCode()));
         	
 		    	if (client.currentScreen == null) {
 		    		currentColumn = 0;
