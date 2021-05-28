@@ -115,7 +115,7 @@ public class AccessibilityPlus implements ModInitializer {
                                 if (Config.readBlocksEnabled()) {
                                     output += block.getName().getString();
                                 }
-                                if (blockState.toString().contains("sign") && Config.readSignsContentsEnabled()) {
+                                if (blockState.toString().contains("sign") && Config.readSignsContentsEnabled() ) {
                                     try {
                                         SignBlockEntity signentity = (SignBlockEntity) client.world
                                                 .getBlockEntity(blockPos);
@@ -124,6 +124,9 @@ public class AccessibilityPlus implements ModInitializer {
                                         output += "2: " + signentity.getTextOnRow(1).getString() + ", ";
                                         output += "3: " + signentity.getTextOnRow(2).getString() + ", ";
                                         output += "4: " + signentity.getTextOnRow(3).getString();
+                                    } catch (Exception e) {
+                                        
+                                
                                     } finally {
                                     }
                                 }
