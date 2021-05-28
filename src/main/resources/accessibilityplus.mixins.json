@@ -9,7 +9,8 @@
         "AccessorSlot",
         "ActionbarInject",
         "RenderTooltipInject",
-        "NarratorManagerInject"
+        "NarratorManagerInject",
+        "ItemStackTooltipInject"
     ],
     "injectors": {
         "defaultRequire": 1
