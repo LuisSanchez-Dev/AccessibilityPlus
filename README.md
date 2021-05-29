@@ -112,6 +112,47 @@ Here are all the keybindings for inventory keyboard navigation:
 * Z: Make a mouse click.
 * X: Make a mouse right click.
 
+There are different inventories that don't work exactly the same as the other, thanks to [shoaib11120](https://github.com/shoaib11120), we have access to more of them:
+
+* Stonecutter screen
+* Trading Screen
+* Recipe book screen for crafting inventory and player inventory
+* Lectern and book screen (only for book reading ui and when the book is in main hand)
+* Enchanting table screen
+
+*Note:* Keyboard navigation works best for these screens when in full screen mode and may not even work in when not in full screen mode or when in maximize mode.
+
+#### Keybindings for these screens
+
+Common:
+* W = Move up a row
+* S = Move down a row
+* A = Move left a column
+* D = Move right a column
+
+Trading screen specific :-
+* R = Scroll up by 1
+* F = Scroll down by 1
+
+Recipe book screen specific :-
+* R = Next Page
+* F = Previous Page
+* C = Open/Close Recipe Book
+* V = Toggle between show all and show craftable
+* Enter = to disable searching mode
+
+Lectern/Book screen specific :-
+* R = Read current page
+* A = previous page
+* D = next page
+
+Enchanting Table specific :-
+* W = previous enchant
+* S = next enchant
+
+#### How to search in crafting inventory or player inventory
+Press T, while in the player inventory or crafting table inventory while recipe book is open and u will go into search mode. All keybindings will be disabled while in search mode. After typing the name press enter and search mode will be disabled.
+
 ## Contact
 
 * Discord - luissanchezdev#6247
