@@ -10,11 +10,11 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(NarratorManager.class)
 public class NarratorManagerInject {
 
-    @Inject(at = @At("HEAD"), method = "narrate(ZLjava/lang/String;)V", cancellable = true)
-    public void sayWithNVDA(boolean interrupt, String message, CallbackInfo ci) {
-        if (NarratorPlus.isNVDALoaded()) {
-            NarratorPlus.narrate(message);
-            ci.cancel();
-        }
+  @Inject(at = @At("HEAD"), method = "narrate(Ljava/lang/String;)V", cancellable = true)
+  public void sayWithNVDA(String message, CallbackInfo ci) {
+    if (NarratorPlus.isNVDALoaded()) {
+      NarratorPlus.narrate(message);
+      ci.cancel();
     }
+  }
 }

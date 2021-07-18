@@ -1,5 +1,12 @@
+// 1.16
+// plugins {
+// 	id 'fabric-loom' version '0.5-SNAPSHOT'
+// 	id 'maven-publish'
+// }
+
+// 1.17
 plugins {
-	id 'fabric-loom' version '0.5-SNAPSHOT'
+	id 'fabric-loom' version '0.8-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -28,27 +35,49 @@ repositories {
         name = "Ladysnake Libs"
         url = "https://dl.bintray.com/ladysnake/libs"
     }
+    maven { url "https://maven.shedaniel.me/" }
 }
 
 
+// 1.16
+
+//dependencies {
+//	//to change the versions see the gradle.properties file
+//	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+//	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+//	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+//	// Fabric API. This is technically optional, but you probably want it anyway.
+//	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+//	// UI Lib
+//	modImplementation "io.github.cottonmc:LibGui:3.2.1+1.16.3"
+//    include "io.github.cottonmc:LibGui:3.2.1+1.16.3"
+
+//    // Detect hotkeys in screen
+//    modApi "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
+//    include "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
+//}
+
+
+// 1.17
+
 dependencies {
-	//to change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    minecraft "com.mojang:minecraft:1.17.1"
+    mappings "net.fabricmc:yarn:1.17.1+build.1:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.11.6"
+            
+    //Fabric api
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.36.1+1.17"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	// UI Lib
-	modImplementation "io.github.cottonmc:LibGui:3.2.1+1.16.3"
-    include "io.github.cottonmc:LibGui:3.2.1+1.16.3"
+  	// UI Lib
+  	modImplementation "io.github.cottonmc:LibGui:4.1.1+1.17.1-rc1"
+    include "io.github.cottonmc:LibGui:4.1.1+1.17.1-rc1"
 
     // Detect hotkeys in screen
     modApi "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
     include "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
 }
-
 processResources {
 	inputs.property "version", project.version
 
