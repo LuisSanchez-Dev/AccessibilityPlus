@@ -1,3 +1,7 @@
+<h1 align="center">Support the development of this mod</h1>
+<p>This mod has lowered tons of eye strain on people and it allowed, together with other mods from Shoaib, blind players to start experiencing Minecraft for the first time.</p>
+<p>Sadly, because of my disability, I got fired from my job almost a year ago and I haven't been able to find one, so I haven't had the time to focus on improving this mod.</p>
+<p>I come to you to ask for help supporting the development of this mod <a href="https://www.patreon.com/luissanchezdev">becoming a Patreon</a> or <a href="https://streamlabs.com/luissanchezdev/tip">making a one-time donation</a> so I can keep improving the mod and allow more people to enjoy Minecraft! </p>
 <p align="center">
   <h1 align="center">Accessibility Plus </h1>
   <p align="center">
