@@ -56,7 +56,7 @@ This mod is for Fabric, so you must install it before using this mod, it also re
 
 ### Prerequisites
 
-Install Fabric for Minecraft 1.16.3: https://fabricmc.net/use/
+Install Fabric for Minecraft 1.17.1: https://fabricmc.net/use/
 
 Make sure to run Minecraft at least once for the mods folder to be generated.
 
@@ -64,7 +64,7 @@ Make sure to run Minecraft at least once for the mods folder to be generated.
 
 1. Download the latest version of the Accessibility Plus mod from https://www.curseforge.com/minecraft/mc-mods/accessibility-plus .
   * Remember to delete the old version if you have the mod already installed.
-2. Download Fabric API for 1.16 from https://www.curseforge.com/minecraft/mc-mods/fabric-api/files .
+2. Download Fabric API for 1.17 from https://www.curseforge.com/minecraft/mc-mods/fabric-api/files .
 3. Open the Downloads folder and copy both files.
 4. Press Win + R to open the Run box and type `%appdata%\.minecraft\mods` and press Enter.
 5. Paste the files in this folder.
