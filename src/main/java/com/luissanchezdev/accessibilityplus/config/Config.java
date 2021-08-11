@@ -20,6 +20,7 @@ public class Config {
     public static final String READ_TOOLTIPS_KEY = "read_tooltip";
     public static final String READ_SIGNS_CONTENTS = "read_signs_contents";
     public static final String INV_KEYBOARD_CONTROL_KEY = "inventory_keyboard_control";
+    public static final String ATION_BAR_KEY = "action_bar_key";
 
     public Config() {
     }
@@ -44,7 +45,14 @@ public class Config {
         if (data == null) {
             loadConfig();
         }
-        return data.get(key).getAsBoolean();
+        boolean val;
+        try {
+            val = data.get(key).getAsBoolean();
+        } catch(Exception e) {
+            resetData();
+            val = data.get(key).getAsBoolean();
+        }
+        return val;
     }
 
     public static boolean toggle(String key) {
@@ -76,15 +84,20 @@ public class Config {
             data = new Gson().fromJson(jsonString, JsonObject.class);
             return data;
         } else {
+            return resetData();
+        }
+    }
+
+    public static JsonObject resetData(){
             data = new JsonObject();
             data.add(READ_BLOCKS_KEY, new JsonPrimitive(true));
             data.add(READ_TOOLTIPS_KEY, new JsonPrimitive(true));
             data.add(READ_SIGNS_CONTENTS, new JsonPrimitive(true));
             data.add(INV_KEYBOARD_CONTROL_KEY, new JsonPrimitive(true));
+            data.add(ATION_BAR_KEY, new JsonPrimitive(true));
 
             saveConfig(data);
             return data;
-        }
     }
 
     public static void saveConfig(JsonObject newConfig) {

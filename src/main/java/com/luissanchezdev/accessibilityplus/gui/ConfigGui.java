@@ -43,6 +43,10 @@ public class ConfigGui extends LightweightGuiDescription {
                 "gui.accessibilityplus.config.buttons.inventorykeyboardcontrol", Config.INV_KEYBOARD_CONTROL_KEY);
         root.add(inventoryKeyboardControllButton, 11, 2, 10, 1);
 
+        ConfigButton actionBarButton = new ConfigButton("gui.accessibilityplus.config.buttons.actionbar",
+                Config.ATION_BAR_KEY);
+        root.add(actionBarButton, 0, 3, 10, 1);
+
         WButton doneButton = new WButton(new TranslatableText("gui.accessibilityplus.config.buttons.done"));
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 7, 8, 7, 1);
